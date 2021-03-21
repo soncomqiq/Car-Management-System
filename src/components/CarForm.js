@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import { IconButton, makeStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import SaveIcon from '@material-ui/icons/Save';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
+import TextFieldRow from './TextFieldRow';
+import IDUtils from '../util/id-util';
+import { makeStyles } from '@material-ui/core';
+
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -18,94 +16,53 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-function Car() {
+function Car(props) {
     const classes = useStyle();
-    const [inputFields, setInputFields] = useState([
-        {licensePlate: '', carBrands: '', carModels: '', carRemarks: ''}
+    const [data, setData] = useState([
+        { id: 0, licensePlate: '', carBrands: '', carModels: '', carRemarks: '' }
     ]);
 
-    const handleChange = (index, event) => {
-        const values = [...inputFields];
-        values[index][event.target.name] = event.target.value;
-        setInputFields(values);
+    const handleChange = (Id, event) => {
+        const index = data.findIndex(e => e.id === Id);
+        const newData = [...data];
+        newData[index][event.target.name] = event.target.value;
+        setData(newData);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("InputFields:", inputFields)
+        console.log("InputFields:", data)
     }
 
     const handleAddFields = () => {
-        setInputFields([...inputFields,  {licensePlate: '', carBrands: '', carModels: '', carRemarks: '' }])
+        setData([...data, { id: IDUtils.uniqueId(), licensePlate: '', carBrands: '', carModels: '', carRemarks: '' }])
     }
 
-    const handleRemoveFields = (index) => {
-        const values = [...inputFields];
-        values.splice(index, 1);
-        setInputFields(values);
+    const handleRemoveFields = (id) => {
+        const newData = data.filter(e => e.id !== id);
+        setData(newData);
     }
 
     return (
         <Container>
             <div className='car-form-wrap'>
-                <h1 style={{ color: 'white' }}>Car Management System</h1>
-                    <form className={classes.root} onSubmit={handleSubmit}>
-                            {inputFields.map((inputField, index) =>(
-                        <div key={index}>
-                        <TextField 
-                            variant="outlined"
-                            name='licensePlate'
-                            label='License Plate'
-                            value={inputField.licensePlate}
-                            onChange={event => handleChange(index, event)}
-                        />
-                        <TextField 
-                            variant="outlined"
-                            name='carBrands'
-                            label='Brands'
-                            value={inputField.carBrands}
-                            onChange={event => handleChange(index, event)}
+                <h1 style={{ color: 'black' }}>Car Management System</h1>
+                <form className={classes.root}>
+                    <div>
 
+                    </div>
+                    <button></button>
+                    {data.map((carInfo, index) => (
+                        <TextFieldRow
+                            key={carInfo.id}
+                            carInfo={carInfo}
+                            handleRemoveFields={handleRemoveFields}
+                            handleAddFields={handleAddFields}
+                            handleChange={handleChange}
+                            handleSubmit={handleSubmit}
                         />
-                        <TextField 
-                            variant="outlined"
-                            name='carModels'
-                            label='Models'
-                            value={inputField.carModels}
-                            onChange={event => handleChange(index, event)}
-
-                        />
-                        <TextField 
-                            id='remark-box'
-                            variant="outlined"
-                            name='carRemarks'
-                            label='Remarks'
-                            width='100ch'
-                            value={inputField.carRemarks}
-                            onChange={event => handleChange(index, event)}
-
-                        />
-                        <IconButton 
-                            onClick={() => handleRemoveFields(index)}>
-                            <RemoveIcon />
-                        </IconButton>
-                        <IconButton 
-                            onClick={() => handleAddFields()}>
-                            <AddIcon />
-                        </IconButton>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            className={classes.button}
-                            startIcon={<SaveIcon />}
-                            onClick={handleSubmit}
-                        >
-                            Save
-                        </Button>
-                        </div>
                     ))}
-                </form>   
+                </form>
             </div>
         </Container>
     )
