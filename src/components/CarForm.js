@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -16,31 +18,33 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-function Car() {
+function Car(props) {
     const classes = useStyle();
-    const [inputFields, setInputField] = useState([
-        {licensePlate: '', carBrands: '', carModels: '', carRemarks: ''},
+    const [inputFields, setInputFields] = useState([
+        {licensePlate: '', carBrands: '', carModels: '', carRemarks: ''}
     ]);
 
-    const inputRef = useRef(null);
+    const handleChange = (index, event) => {
+        const values = [...inputFields];
+        values[index][event.target.name] = event.target.value;
+        setInputFields(values);
+    }
 
-    useEffect(() => {
-        inputRef.current.focus();
-    });
-
-    const handleChange = e => {
-        setInputField(e.target.value);
-    };
-
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("InputFields:", inputFields)
+    }
 
-        props.onSubmit({
-            id: Math.floor(Math.random() * 100000),
-            text: inputFields
-        });
-        setInputField('')
-    };
+    // const handleAddFields = () => {
+    //     setInputFields([...inputFields,  {licensePlate: '', carBrands: '', carModels: '', carRemarks: '' }])
+    // }
+
+    // const handleRemoveFields = (index) => {
+    //     const values = [...inputFields];
+    //     values.splice(index, 1);
+    //     setInputFields(values);
+    // }
+
 
     return (
         <Container>
@@ -54,21 +58,23 @@ function Car() {
                             name='licensePlate'
                             label='License Plate'
                             value={inputField.licensePlate}
-                            onChange={handleChange}
+                            onChange={event => handleChange(index, event)}
                         />
                         <TextField 
                             variant="outlined"
                             name='carBrands'
                             label='Brands'
                             value={inputField.carBrands}
-                            onChange={handleChange}
+                            onChange={event => handleChange(index, event)}
+
                         />
                         <TextField 
                             variant="outlined"
                             name='carModels'
                             label='Models'
                             value={inputField.carModels}
-                            onChange={handleChange}
+                            onChange={event => handleChange(index, event)}
+
                         />
                         <TextField 
                             id='remark-box'
@@ -77,19 +83,27 @@ function Car() {
                             label='Remarks'
                             width='100ch'
                             value={inputField.carRemarks}
-                            onChange={handleChange}
+                            onChange={event => handleChange(index, event)}
+
                         />
-                        <div>
+                        {/* <IconButton 
+                            onClick={() => handleRemoveFields(index)}>
+                            <RemoveIcon />
+                        </IconButton>
+                        <IconButton 
+                            onClick={() => handleAddFields()}>
+                            <AddIcon />
+                        </IconButton> */}
                         <Button
                             variant="contained"
                             color="primary"
-                            size="large"
+                            size="small"
                             className={classes.button}
                             startIcon={<SaveIcon />}
+                            onClick={handleSubmit}
                         >
                             Save
                         </Button>
-                        </div>
                         </div>
                     ))}
                 </form>   
