@@ -33,7 +33,7 @@ function TextFieldRow(props) {
             <TextField
                 variant="outlined"
                 name='licensePlate'
-                label='License Plate'
+                label='License Plates'
                 value={carInfo.licensePlate}
                 onChange={event => handleChange(carInfo.id, event)}
             />

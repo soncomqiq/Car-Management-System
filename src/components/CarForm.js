@@ -46,7 +46,7 @@ function Car(props) {
     return (
         <Container>
             <div className='car-form-wrap'>
-                <h1 style={{ color: 'black', fontFamily: 'sans-serif' }}>Car Management System</h1>
+                <h1 style={{ color: 'black', fontFamily: 'sans-serif' }}>🚘 Car Management System</h1>
                 <form className={classes.root}>
                     {data.map((carInfo, index) => (
                         <TextFieldRow
