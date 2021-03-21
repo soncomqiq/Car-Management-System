@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Car from './components/Car';
+import CarForm from './components/CarForm';
 
 function App() {
   return (
     <div className="App">
-      <Car />
+      <CarForm />
     </div>
   );
 }
