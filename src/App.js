@@ -4,7 +4,7 @@ import CarForm from './components/CarForm';
 
 function App() {
   return (
-    <div className="App">
+    <div className="cms-wrap">
       <CarForm />
     </div>
   );

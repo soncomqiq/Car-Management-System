@@ -10,7 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 const useStyle = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
-            margin: theme.spacing(1),
+            margin: theme.spacing(1)
         }
     },
     button: {
@@ -18,7 +18,7 @@ const useStyle = makeStyles((theme) => ({
     }
 }));
 
-function Car(props) {
+function Car() {
     const classes = useStyle();
     const [inputFields, setInputFields] = useState([
         {licensePlate: '', carBrands: '', carModels: '', carRemarks: ''}
@@ -35,21 +35,20 @@ function Car(props) {
         console.log("InputFields:", inputFields)
     }
 
-    // const handleAddFields = () => {
-    //     setInputFields([...inputFields,  {licensePlate: '', carBrands: '', carModels: '', carRemarks: '' }])
-    // }
+    const handleAddFields = () => {
+        setInputFields([...inputFields,  {licensePlate: '', carBrands: '', carModels: '', carRemarks: '' }])
+    }
 
-    // const handleRemoveFields = (index) => {
-    //     const values = [...inputFields];
-    //     values.splice(index, 1);
-    //     setInputFields(values);
-    // }
-
+    const handleRemoveFields = (index) => {
+        const values = [...inputFields];
+        values.splice(index, 1);
+        setInputFields(values);
+    }
 
     return (
         <Container>
-            <div>
-                <h1>Car Management System</h1>
+            <div className='car-form-wrap'>
+                <h1 style={{ color: 'white' }}>Car Management System</h1>
                     <form className={classes.root} onSubmit={handleSubmit}>
                             {inputFields.map((inputField, index) =>(
                         <div key={index}>
@@ -86,14 +85,14 @@ function Car(props) {
                             onChange={event => handleChange(index, event)}
 
                         />
-                        {/* <IconButton 
+                        <IconButton 
                             onClick={() => handleRemoveFields(index)}>
                             <RemoveIcon />
                         </IconButton>
                         <IconButton 
                             onClick={() => handleAddFields()}>
                             <AddIcon />
-                        </IconButton> */}
+                        </IconButton>
                         <Button
                             variant="contained"
                             color="primary"
