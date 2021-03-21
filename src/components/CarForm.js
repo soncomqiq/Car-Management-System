@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 class CarForm extends Component{
      constructor(props) {
         super(props);
@@ -9,23 +10,17 @@ class CarForm extends Component{
             carModels: '',
             carRemarks: '' 
             };
-        }
+        };
     
         handleChange = (e) => {
             this.setState({
                 [e.target.name]: e.target.value
-            })
-        }
-
-        // handleSubmit = (e) => {
-        //     this.setState({
-                
-        //     })
-        // }
+            });
+        };
     
         render() {
             return (
-                <form>
+                <form className='car-form' onSubmit={this.handleSubmit}>
                     <div className='car-plate-center'>
                         <label className='inner-cms-center'>
                             License Plate
